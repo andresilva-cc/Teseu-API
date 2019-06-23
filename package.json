@@ -1,0 +1,29 @@
+{
+  "name": "teseu-api",
+  "version": "1.0.0",
+  "description": "Teseu API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeehSlash/Teseu-API.git"
+  },
+  "author": "André Luiz (andreluiz.97@outlook.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DeehSlash/Teseu-API/issues"
+  },
+  "homepage": "https://github.com/DeehSlash/Teseu-API#readme",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "pg": "^7.11.0",
+    "sequelize": "^5.8.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
