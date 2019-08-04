@@ -2,23 +2,32 @@ class User extends Model { }
 
 User.init({
   username: {
-    allowNull: false,
     type: Sequelize.STRING,
-    unique: true
+    allowNull: false,
+    unique: true,
+    validate: {
+      is: /^[a-zA-Z0-9._]+$/,
+      notNull: true,
+      notEmpty: true
+    }
   },
   phone: {
-    allowNull: false,
     type: Sequelize.STRING(15),
-    unique: true
+    allowNull: false,
+    unique: true,
+    validate: {
+      notNull: true,
+      notEmpty: true
+    }
   },
   points: {
-    allowNull: false,
     type: Sequelize.INTEGER,
+    allowNull: false,
     defaultValue: 0
   },
   level: {
-    allowNull: false,
     type: Sequelize.SMALLINT,
+    allowNull: false,
     defaultValue: 1
   }
 }, { sequelize, modelName: 'user' })
