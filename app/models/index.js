@@ -12,6 +12,7 @@ const OccurrenceReactionModel = require('./occurrence_reaction')
 const OccurrenceReportModel = require('./occurrence_report')
 const OccurrenceModel = require('./occurrence')
 const UserModel = require('./user')
+const UserSettingModel = require('./user_setting')
 
 // Init Models
 const models = {
@@ -20,7 +21,8 @@ const models = {
   OccurrenceReaction: OccurrenceReactionModel.init(sequelize, Sequelize),
   OccurrenceReport: OccurrenceReportModel.init(sequelize, Sequelize),
   Occurrence: OccurrenceModel.init(sequelize, Sequelize),
-  User: UserModel.init(sequelize, Sequelize)
+  User: UserModel.init(sequelize, Sequelize),
+  UserSetting: UserSettingModel.init(sequelize, Sequelize)
 }
 
 // Run associations if it exists
