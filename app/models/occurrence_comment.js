@@ -6,15 +6,15 @@ class OccurrenceComment extends Sequelize.Model {
     return super.init({
       occurrenceId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       comment: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         validate: {
           notNull: true,
           notEmpty: true,

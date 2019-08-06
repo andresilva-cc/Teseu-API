@@ -7,29 +7,29 @@ class Occurrence extends Model {
       victim: {
         allowNull: false,
         defaultValue: false,
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         validate: {
           notNull: true
         }
       },
       when: {
         allowNull: false,
-        defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE,
+        defaultValue: DataTypes.NOW,
+        type: DataTypes.DATE,
         validate: {
           notNull: true
         }
       },
       categoryId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
         validate: {
           notNull: true
         }
       },
       description: {
         allowNull: false,
-        type: Sequelize.TEXT,
+        type: DataTypes.TEXT,
         validate: {
           notNull: true,
           notEmpty: true
@@ -38,25 +38,25 @@ class Occurrence extends Model {
       notifyContacts: {
         allowNull: false,
         defaultValue: false,
-        type: Sequelize.BOOLEAN,
+        type: DataTypes.BOOLEAN,
         validate: {
           notNull: true
         }
       },
       location: {
         allowNull: false,
-        type: Sequelize.GEOMETRY('POINT'),
+        type: DataTypes.GEOMETRY('POINT'),
         validate: {
           notNull: true
         }
       },
       attachment: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING
       },
       active: {
         allowNull: false,
         defaultValue: true,
-        type: Sequelize.BOOLEAN
+        type: DataTypes.BOOLEAN
       }
     }, { sequelize })
   }
