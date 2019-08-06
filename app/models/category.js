@@ -1,9 +1,16 @@
-class Category extends Model { }
+const Sequelize = require('sequelize')
 
-Category.init({
-  name: {
-    type: Sequelize.STRING(50),
-    allowNull: false,
-    unique: true
+class Category extends Sequelize.Model {
+
+  static init(sequelize, DataTypes) {
+    return super.init({
+      name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        unique: true
+      }
+    }, { sequelize })
   }
-}, { sequelize, modelName: 'category' })
+}
+
+module.exports = Category

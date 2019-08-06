@@ -1,33 +1,40 @@
-class User extends Model { }
+const Sequelize = require('sequelize')
 
-User.init({
-  username: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      is: /^[a-zA-Z0-9._]+$/,
-      notNull: true,
-      notEmpty: true
-    }
-  },
-  phone: {
-    type: Sequelize.STRING(15),
-    allowNull: false,
-    unique: true,
-    validate: {
-      notNull: true,
-      notEmpty: true
-    }
-  },
-  points: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0
-  },
-  level: {
-    type: Sequelize.SMALLINT,
-    allowNull: false,
-    defaultValue: 1
+class User extends Model {
+
+  static init(sequelize, DataTypes) {
+    return super.init({
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          is: /^[a-zA-Z0-9._]+$/,
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      phone: {
+        type: DataTypes.STRING(15),
+        allowNull: false,
+        unique: true,
+        validate: {
+          notNull: true,
+          notEmpty: true
+        }
+      },
+      points: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      level: {
+        type: DataTypes.SMALLINT,
+        allowNull: false,
+        defaultValue: 1
+      }
+    }, { sequelize })
   }
-}, { sequelize, modelName: 'user' })
+}
+
+module.exports = User
