@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-class Occurrence extends Model {
+class Occurrence extends Sequelize.Model {
 
   static init(sequelize, DataTypes) {
     return super.init({

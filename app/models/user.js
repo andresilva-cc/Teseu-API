@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-class User extends Model {
+class User extends Sequelize.Model {
 
   static init(sequelize, DataTypes) {
     return super.init({
