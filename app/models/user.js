@@ -20,7 +20,8 @@ class User extends Sequelize.Model {
         unique: true,
         validate: {
           notNull: true,
-          notEmpty: true
+          notEmpty: true,
+          len: [10, 15]
         }
       },
       points: {
