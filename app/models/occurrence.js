@@ -8,34 +8,47 @@ class Occurrence extends Model {
         allowNull: false,
         defaultValue: false,
         type: Sequelize.BOOLEAN,
+        validate: {
+          notNull: true
+        }
       },
       when: {
         allowNull: false,
         defaultValue: Sequelize.NOW,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        validate: {
+          notNull: true
+        }
       },
       categoryId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Categories',
-          key: 'id',
-          as: 'categoryId'
+        validate: {
+          notNull: true
         }
       },
       description: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        validate: {
+          notNull: true,
+          notEmpty: true
+        }
       },
       notifyContacts: {
         allowNull: false,
         defaultValue: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        validate: {
+          notNull: true
+        }
       },
       location: {
         allowNull: false,
-        type: Sequelize.GEOMETRY('POINT')
+        type: Sequelize.GEOMETRY('POINT'),
+        validate: {
+          notNull: true
+        }
       },
       attachment: {
         type: Sequelize.STRING
