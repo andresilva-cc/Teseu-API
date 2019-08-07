@@ -12,6 +12,7 @@ const OccurrenceReactionModel = require('./occurrence_reaction')
 const OccurrenceReportModel = require('./occurrence_report')
 const OccurrenceModel = require('./occurrence')
 const UserModel = require('./user')
+const UserConnectionHistoryModel = require('./user_connection_history')
 const UserContactModel = require('./user_contact')
 const UserNotificationCategoryModel = require('./user_notification_category')
 const UserPlaceModel = require('./user_place')
@@ -26,6 +27,7 @@ const models = {
   OccurrenceReport: OccurrenceReportModel.init(sequelize, Sequelize),
   Occurrence: OccurrenceModel.init(sequelize, Sequelize),
   User: UserModel.init(sequelize, Sequelize),
+  UserConnectionHistory: UserConnectionHistoryModel.init(sequelize, Sequelize),
   UserContact: UserContactModel.init(sequelize, Sequelize),
   UserNotificationCategory: UserNotificationCategoryModel.init(sequelize, Sequelize),
   UserPlace: UserPlaceModel.init(sequelize, Sequelize),
