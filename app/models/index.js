@@ -31,7 +31,7 @@ const models = {
   UserContact: UserContactModel.init(sequelize, Sequelize),
   UserNotificationCategory: UserNotificationCategoryModel.init(sequelize, Sequelize),
   UserPlace: UserPlaceModel.init(sequelize, Sequelize),
-  UserPlaceCategory: this.UserPlaceCategory.init(sequelize, Sequelize),
+  UserPlaceCategory: UserPlaceCategoryModel.init(sequelize, Sequelize),
   UserSetting: UserSettingModel.init(sequelize, Sequelize)
 }
 
