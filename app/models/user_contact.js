@@ -25,7 +25,7 @@ class UserContact extends Sequelize.Model {
           notEmpty: true,
           len: [10, 15]
         }
-      },
+      }
     }, {
       updatedAt: false,
       sequelize
