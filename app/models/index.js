@@ -14,6 +14,7 @@ const OccurrenceModel = require('./occurrence')
 const UserModel = require('./user')
 const UserContactModel = require('./user_contact')
 const UserNotificationCategoryModel = require('./user_notification_category')
+const UserPlaceModel = require('./user_place')
 const UserSettingModel = require('./user_setting')
 
 // Init Models
@@ -26,6 +27,7 @@ const models = {
   User: UserModel.init(sequelize, Sequelize),
   UserContact: UserContactModel.init(sequelize, Sequelize),
   UserNotificationCategory: UserNotificationCategoryModel.init(sequelize, Sequelize),
+  UserPlace: UserPlaceModel.init(sequelize, Sequelize),
   UserSetting: UserSettingModel.init(sequelize, Sequelize)
 }
 
