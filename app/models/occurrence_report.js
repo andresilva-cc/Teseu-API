@@ -6,7 +6,7 @@ class OccurrenceReport extends Sequelize.Model {
     return super.init({
       occurrenceId: {
         allowNull: false,
-        type: SequelDataTypesize.INTEGER,
+        type: DataTypes.INTEGER,
       },
       userId: {
         allowNull: false,
