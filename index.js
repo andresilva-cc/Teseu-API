@@ -1,9 +1,15 @@
 require('dotenv').config()
 const express = require('express')
+const bodyParser = require('body-parser')
 
 // Create Express instance
 const app = express()
 
+// Configure Body Parser
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+// Index route
 app.get('/', (req, res) => {
   res.send('Welcome to Teseu API, check https://web.teseu.app/api-docs for more information on how to use this API')
 })
