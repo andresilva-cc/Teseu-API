@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
+const ExceptionFormatter = require('./app/utils/exception_formatter')
 
 // Create Express instance
 const app = express()
@@ -16,6 +17,15 @@ app.get('/', (req, res) => {
 
 // Import routes
 require('./routes')(app)
+
+// Handle errors
+app.use((err, req, res, next) => {
+  if (!err)
+    return next()
+  
+  const exception = ExceptionFormatter.format(err)
+  return res.status(exception.code).send(exception.error)
+})
 
 // Start server
 app.listen(process.env.APP_PORT, () => {

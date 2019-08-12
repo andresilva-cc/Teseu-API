@@ -10,17 +10,17 @@ class AuthController {
    * @static
    * @param {Object} req - Requisition
    * @param {Object} res - Response
+   * @param {function} next - Next function
    * @returns
    * @memberof AuthController
    */
-  static generateUsername (req, res) {
+  static generateUsername (req, res, next) {
     try {
       const username = AuthService.generateUsername()
       return res.status(200).send(username)
 
     } catch (ex) {
-      const exception = ExceptionFormatter.format(ex)
-      return res.status(exception.code).send(exception.error)
+      return next(ex)
     }
   }
 
@@ -30,16 +30,16 @@ class AuthController {
    * @static
    * @param {Object} req - Requisition
    * @param {Object} res - Response
+   * @param {function} next - Next function
    * @memberof AuthController
    */
-  static async usernameExists (req, res) {
+  static async usernameExists (req, res, next) {
     try {
       const exists = await AuthService.checkUsername(req.body.username)
       return res.status(200).send(exists)
 
     } catch (ex) {
-      const exception = ExceptionFormatter.format(ex)
-      return res.status(exception.code).send(exception.error)
+      return next(ex)
     }
   }
 }
