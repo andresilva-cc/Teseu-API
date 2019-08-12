@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken')
+const JWTFacade = require('../app/facades/jwt_facade')
 const ExceptionFormatter = require('../app/utils/exception_formatter')
 
 /**
@@ -16,19 +16,16 @@ module.exports = audience => {
       const token = req.headers.authorization.split(' ')[1]
 
       // Verify the token with the respective audience
-      jwt.verify(token, process.env.AUTH_SECRET, { audience }, (err, decoded) => {
-        
+      try {
         // If valid, set req.user and continue
-        if (!err) {
-          req.user = decoded
-          return next()
-
-        // If not valid, send error response
-        } else {
-          const exception = ExceptionFormatter.format(err)
-          return res.status(exception.code).send(exception.error)
-        }
-      })
+        const decode = JWTFacade.verify(token, audience)
+        req.user = decode
+        return next()
+        
+      } catch (ex) {
+        const exception = ExceptionFormatter.format(ex)
+        return res.status(exception.code).send(exception.error)
+      }
 
     // If not supplied, send error response
     } else {
