@@ -15,8 +15,9 @@ class ExceptionFormatter {
     // Parse exception
     const exception = this.parse(ex)
 
-    // If in development, add stack
+    // If in development, add stack and exception name
     if (process.env.ENVIRONMENT === 'development') {
+      exception.error.name = ex.name
       exception.error.stack = ex.stack
     }
     
@@ -48,6 +49,15 @@ class ExceptionFormatter {
           error: {
             message: 'Validation Error',
             details: Helpers.capitalizeFirstLetter(ex.errors[0].message)
+          }
+        }
+      
+      case 'UnauthorizedError':
+        return {
+          code: 401,
+          error: {
+            message: 'Unauthorized Error',
+            details: 'No authorization token was found'
           }
         }
 
