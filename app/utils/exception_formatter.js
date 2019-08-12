@@ -34,6 +34,15 @@ class ExceptionFormatter {
    */
   static parse (ex) {
     switch (ex.name) {
+      case 'JsonWebTokenError':
+        return {
+          code: 403,
+          error: {
+            message: 'Forbidden',
+            details: 'The provided token is invalid or does not have access to the requested resource.'
+          }
+        }
+
       case 'SequelizeConnectionRefusedError':
         return {
           code: 503,
@@ -56,8 +65,8 @@ class ExceptionFormatter {
         return {
           code: 401,
           error: {
-            message: 'Unauthorized Error',
-            details: 'No authorization token was found'
+            message: 'Unauthorized',
+            details: 'No authorization token was found.'
           }
         }
 
