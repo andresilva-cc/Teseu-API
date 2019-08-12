@@ -1,4 +1,3 @@
-const ExceptionFormatter = require('../utils/exception_formatter')
 const AuthService = require('../services/auth_service')
 
 /** Auth Controller */
