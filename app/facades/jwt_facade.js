@@ -8,15 +8,15 @@ class JWTFacade {
    *
    * @static
    * @param {*} payload
-   * @param {*} options
+   * @param {Object} options
    * @memberof JWTFacade
    */
-  static sign (payload, options) {
-    jwt.sign(payload), process.env.AUTH_SECRET, options, (err, token) => {
-      if (!err)
-        return token
-      else
-        throw err
+  static async sign (payload, options) {
+    try {
+      return await jwt.sign(payload, process.env.AUTH_SECRET, options)
+      
+    } catch (ex) {
+      throw ex
     }
   }
 
