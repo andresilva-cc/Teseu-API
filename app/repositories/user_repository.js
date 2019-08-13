@@ -18,6 +18,28 @@ class UserRepository extends BaseRepository {
   }
 
   /**
+   * Retrieves a user by its phone number
+   *
+   * @param {string} phone Phone number
+   * @returns {Object|null} The user if found, null if not
+   * @memberof UserRepository
+   */
+  async findByPhone (phone) {
+    try {
+      const user = await this.model.findOne({
+        where: {
+          phone
+        }
+      })
+  
+      return user
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
    * Checks if the username already exists
    *
    * @param {string} username The username to check

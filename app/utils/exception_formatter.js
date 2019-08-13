@@ -34,6 +34,24 @@ class ExceptionFormatter {
    */
   static parse (ex) {
     switch (ex.name) {
+      case 'InvalidRequestCodeError':
+        return {
+          code: 400,
+          error: {
+            message: 'Invalid Request Code',
+            details: 'The provided request code is invalid or has already been verified.'
+          }
+        }
+      
+      case 'InvalidVerificationCodeError':
+        return {
+          code: 403,
+          error: {
+            message: 'Invalid Code',
+            details: 'The provided code is invalid.'
+          }
+        }
+
       case 'JsonWebTokenError':
         return {
           code: 403,
@@ -58,6 +76,15 @@ class ExceptionFormatter {
           error: {
             message: 'Validation Error',
             details: Helpers.capitalizeFirstLetter(ex.errors[0].message)
+          }
+        }
+
+      case 'TooManyAttemptsError':
+        return {
+          code: 403,
+          error: {
+            message: 'Too Many Attempts',
+            details: 'Too many invalid attempts were made. The resource has expired.'
           }
         }
       
