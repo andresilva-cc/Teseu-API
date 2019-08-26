@@ -1,5 +1,4 @@
 const AuthService = require('../services/auth_service')
-const JWTFacade = require('../facades/jwt_facade')
 
 /** Auth Controller */
 class AuthController {
