@@ -14,9 +14,9 @@ class AuthController {
    * @returns
    * @memberof AuthController
    */
-  static register (req, res, next) {
+  static async register (req, res, next) {
     try {
-      const user = AuthService.register(req.body.username, req.body.phone)
+      const user = await AuthService.register(req.body.username, req.body.phone)
       return res.status(201).send(user)
 
     } catch (ex) {
