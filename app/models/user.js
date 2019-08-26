@@ -9,9 +9,9 @@ class User extends Sequelize.Model {
         allowNull: false,
         unique: true,
         validate: {
-          is: /^[a-zA-Z0-9._]+$/,
           notNull: true,
-          notEmpty: true
+          notEmpty: true,
+          is: /^[a-zA-Z0-9._]+$/
         }
       },
       phone: {
