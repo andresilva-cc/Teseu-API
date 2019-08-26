@@ -1,10 +1,14 @@
 require('dotenv').config()
 const express = require('express')
+const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const ExceptionFormatter = require('./app/utils/exception_formatter')
 
 // Create Express instance
 const app = express()
+
+// Use Morgan to log requests to console
+app.use(morgan('dev'))
 
 // Configure Body Parser
 app.use(bodyParser.urlencoded({ extended: true }))
