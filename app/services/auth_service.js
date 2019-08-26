@@ -2,7 +2,6 @@ const User = require('../repositories/').User
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
 const usernames = require('../utils/username.json')
-const util = require('util')
 
 /** Auth Service */
 class AuthService {
