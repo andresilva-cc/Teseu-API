@@ -26,3 +26,13 @@ Para executar este projeto, são necessários os seguintes softwares/ferramentas
 
 - Para executar em modo de desenvolvimento com reload automático, execute o comando `npm run dev`
 - Para executar no modo de produção, execute o comando `npm run start`. **Atenção**: é recomendado utilizar o PM2 para gerenciar a execução do processo.
+
+## Outros
+
+### Gerar token de admin
+
+Para gerar um token de admin, execute com o Node.js o arquivo ```./app/utils/generate_admin_token.js``` passando como parâmetro o nome do responsável pelo token, como por exemplo:
+
+```node ./app/utils/generate_admin_token.js andre```
+
+O token será retornado no terminal.
