@@ -1,3 +1,5 @@
+const Error = require('../utils/error')
+
 /** Base repository to be extended by other repositories */
 class BaseRepository {
 
@@ -72,7 +74,14 @@ class BaseRepository {
   async delete (id) {
     try {
       const resource = await this.findById(id)
-      return await resource.destroy()
+
+      if (resource) {
+        await resource.destroy()
+        return true
+      }
+
+      throw new Error('ResourceNotFoundError')
+      
     } catch (ex) {
       throw ex
     }
