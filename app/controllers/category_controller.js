@@ -55,8 +55,8 @@ class CategoryController {
    */
   static async delete (req, res, next) {
     try {
-      const category = await CategoryService.delete(req.params.id)
-      return res.status(200).send(category)
+      await CategoryService.delete(req.params.id)
+      return res.sendStatus(200)
 
     } catch (ex) {
       return next(ex)
