@@ -17,9 +17,10 @@ class ErrorFormatter {
 
     // If in development, add stack and error name
     if (process.env.ENVIRONMENT === 'development') {
-      formattedError.error.originalName = e.name
+      if (e.name)
+        formattedError.error.originalName = e.name
       if (e.stack)
-      formattedError.error.stack = e.stack
+        formattedError.error.stack = e.stack
     }
     
     return formattedError
@@ -68,9 +69,11 @@ class ErrorFormatter {
       case 'ResourceNotFoundError':
         return {
           code: 404,
+          error: {
             name: 'ResourceNotFoundError',
             message: 'Resource Not Found',
             details: 'The requested resource was not found or does not exist.'
+          }
         }
 
       case 'SequelizeConnectionRefusedError':
