@@ -1,5 +1,5 @@
 const JWTFacade = require('../app/facades/jwt_facade')
-const ExceptionFormatter = require('../app/utils/exception_formatter')
+const ErrorFormatter = require('../app/utils/error_formatter')
 
 /**
  * Verifies JWT token
@@ -23,14 +23,14 @@ module.exports = audience => {
         return next()
         
       } catch (ex) {
-        const exception = ExceptionFormatter.format(ex)
-        return res.status(exception.code).send(exception.error)
+        const error = ErrorFormatter.format(ex)
+        return res.status(error.code).send(error.error)
       }
 
     // If not supplied, send error response
     } else {
-      const exception = ExceptionFormatter.format({ name: 'UnauthorizedError' })
-      return res.status(exception.code).send(exception.error)
+      const error = ErrorFormatter.format({ name: 'UnauthorizedError' })
+      return res.status(error.code).send(error.error)
     }
   }
 }

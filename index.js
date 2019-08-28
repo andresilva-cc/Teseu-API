@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-const ExceptionFormatter = require('./app/utils/exception_formatter')
+const ErrorFormatter = require('./app/utils/error_formatter')
 
 // Create Express instance
 const app = express()
@@ -27,8 +27,8 @@ app.use((err, req, res, next) => {
   if (!err)
     return next()
   
-  const exception = ExceptionFormatter.format(err)
-  return res.status(exception.code).send(exception.error)
+  const error = ErrorFormatter.format(err)
+  return res.status(error.code).send(error.error)
 })
 
 // Start server

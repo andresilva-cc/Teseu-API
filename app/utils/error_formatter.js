@@ -1,39 +1,40 @@
 const Helpers = require('./helpers')
 
-/** Class to format exceptions to a standard format */
-class ExceptionFormatter {
+/** Class to format errors to a standard format */
+class ErrorFormatter {
   
   /**
-   * Formats an exception
+   * Formats an error
    *
    * @static
-   * @param {Object} ex - The exception to be formatted
-   * @returns {Object} The formatted exception
-   * @memberof ExceptionFormatter
+   * @param {Object} e - The error to be formatted
+   * @returns {Object} The formatted error
+   * @memberof ErrorFormatter
    */
-  static format (ex) {
-    // Parse exception
-    const exception = this.parse(ex)
+  static format (e) {
+    // Parse error
+    const formattedError = this.parse(e)
 
-    // If in development, add stack and exception name
+    // If in development, add stack and error name
     if (process.env.ENVIRONMENT === 'development') {
-      exception.error.originalName = ex.name
-      exception.error.stack = ex.stack
+      formattedError.error.originalName = e.name
+      if (e.stack)
+      formattedError.error.stack = e.stack
     }
     
-    return exception
+    return formattedError
   }
   
   /**
-   * Parses the exception name and builds the new error object
+   * Parses the error name and builds the new error object
    *
    * @static
-   * @param {*} ex - The exception to be parsed
-   * @returns {Object} The formatted exception
-   * @memberof ExceptionFormatter
+   * @param {*} e - The error to be parsed
+   * @returns {Object} The formatted error
+   * @memberof ErrorFormatter
    */
-  static parse (ex) {
-    switch (ex.name) {
+  static parse (e) {
+    switch (e.name) {
       case 'InvalidRequestCodeError':
         return {
           code: 400,
@@ -80,9 +81,9 @@ class ExceptionFormatter {
           error: {
             name: 'ValidationError',
             message: 'Validation Error',
-            details: Helpers.capitalizeFirstLetter(ex.errors[0].message),
-            field: ex.errors[0].path,
-            validator: ex.errors[0].validatorKey
+            details: Helpers.capitalizeFirstLetter(e.errors[0].message),
+            field: e.errors[0].path,
+            validator: e.errors[0].validatorKey
           }
         }
 
@@ -92,9 +93,9 @@ class ExceptionFormatter {
           error: {
             name: 'ValidationError',
             message: 'Validation Error',
-            details: Helpers.capitalizeFirstLetter(ex.errors[0].message),
-            field: ex.errors[0].path,
-            validator: ex.errors[0].validatorKey
+            details: Helpers.capitalizeFirstLetter(e.errors[0].message),
+            field: e.errors[0].path,
+            validator: e.errors[0].validatorKey
           }
         }
 
@@ -104,7 +105,7 @@ class ExceptionFormatter {
           error: {
             name: 'TooManyAttemptsError',
             message: 'Too Many Attempts',
-            details: 'Too many invalid attempts were made. The resource has expired.'
+            details: 'Too many invalid attempts were made. The resource has epired.'
           }
         }
       
@@ -131,4 +132,4 @@ class ExceptionFormatter {
   }
 }
 
-module.exports = ExceptionFormatter
+module.eports = ErrorFormatter
