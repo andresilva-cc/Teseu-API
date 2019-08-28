@@ -29,13 +29,12 @@ class JWTFacade {
    * @memberof JWTFacade
    */
   static verify (token, audience) {
-    jwt.verify(token, process.env.AUTH_SECRET, { audience }, (err, decoded) => {
-      if (!err) {
-        return decoded
-      } else {
-        throw err
-      }
-    })
+    try {
+      return jwt.verify(token, process.env.AUTH_SECRET, { audience })
+
+    } catch (ex) {
+      throw ex
+    }
   }  
 }
 
