@@ -65,6 +65,14 @@ class ErrorFormatter {
           }
         }
 
+      case 'ResourceNotFoundError':
+        return {
+          code: 404,
+            name: 'ResourceNotFoundError',
+            message: 'Resource Not Found',
+            details: 'The requested resource was not found or does not exist.'
+        }
+
       case 'SequelizeConnectionRefusedError':
         return {
           code: 503,
@@ -132,4 +140,4 @@ class ErrorFormatter {
   }
 }
 
-module.eports = ErrorFormatter
+module.exports = ErrorFormatter
