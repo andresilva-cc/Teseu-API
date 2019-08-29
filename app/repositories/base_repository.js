@@ -12,6 +12,7 @@ class BaseRepository {
   async all () {
     try {
       return await this.model.findAll()
+      
     } catch (ex) {
       throw ex
     }
@@ -26,7 +27,13 @@ class BaseRepository {
    */
   async findById (id) {
     try {
-      return await this.model.findByPk(id)
+      const resource = await this.model.findByPk(id)
+
+      if (resource)
+        return resource
+
+      throw new Error('ResourceNotFoundError')
+
     } catch (ex) {
       throw ex
     }
@@ -58,7 +65,14 @@ class BaseRepository {
   async update (id, data) {
     try {
       const resource = await this.findById(id)
-      return await resource.update(data)
+
+      if (resource) {
+        await resource.update(data)
+        return true
+      }
+
+      throw new Error('ResourceNotFoundError')
+
     } catch (ex) {
       throw ex
     }
