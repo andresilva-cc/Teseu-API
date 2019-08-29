@@ -1,4 +1,5 @@
 const User = require('../repositories/').User
+const UserSetting = require('../repositories').UserSetting
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
 const usernames = require('../utils/username.json')
@@ -17,7 +18,10 @@ class AuthService {
    */
   static async register (username, phone) {
     try {
-      return await User.create({ username, phone })
+      const user = await User.create({ username, phone })
+      await UserSetting.create({ userId: user.id })
+
+      return user
 
     } catch (ex) {
       throw ex
