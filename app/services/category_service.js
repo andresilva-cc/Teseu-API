@@ -8,7 +8,7 @@ class CategoryService {
    *
    * @static
    * @returns {Array} List of categories
-   * @memberof AuthService
+   * @memberof CategoryService
    */
   static async all () {
     try {
