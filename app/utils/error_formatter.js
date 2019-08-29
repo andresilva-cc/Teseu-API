@@ -105,6 +105,16 @@ class ErrorFormatter {
           }
         }
 
+      case 'SequelizeForeignKeyConstraintError':
+        return {
+          code: 400,
+          error: {
+            name: 'ForeignKeyConstraintError',
+            message: 'Foreign Key Constraint Error',
+            details: 'The provided data violates a foreign key constraint.'
+          }
+        }
+
       case 'SequelizeValidationError':
         return {
           code: 400,
