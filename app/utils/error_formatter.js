@@ -4,6 +4,25 @@ const Helpers = require('./helpers')
 class ErrorFormatter {
   
   /**
+   * Middleware for error handling
+   *
+   * @static
+   * @param {Object} err - Errors
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof ErrorFormatter
+   */
+  static middleware (err, req, res, next) {
+    if (!err)
+      return next()
+
+    const error = this.format(err)
+    return res.status(error.code).send(error.error)
+  }
+
+  /**
    * Formats an error
    *
    * @static

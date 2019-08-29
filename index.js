@@ -23,13 +23,7 @@ app.get('/', (req, res) => {
 require('./routes')(app)
 
 // Handle errors
-app.use((err, req, res, next) => {
-  if (!err)
-    return next()
-  
-  const error = ErrorFormatter.format(err)
-  return res.status(error.code).send(error.error)
-})
+app.use(ErrorFormatter.middleware.bind(ErrorFormatter))
 
 // Start server
 app.listen(process.env.APP_PORT, () => {
