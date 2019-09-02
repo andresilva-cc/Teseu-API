@@ -145,7 +145,7 @@ class ErrorFormatter {
           error: {
             name: 'TooManyAttemptsError',
             message: 'Too Many Attempts',
-            details: 'Too many invalid attempts were made. The resource has epired.'
+            details: 'Too many invalid attempts were made. The resource has expired.'
           }
         }
       
