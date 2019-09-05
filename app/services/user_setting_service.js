@@ -31,7 +31,17 @@ class UserSettingService {
    */
   static async update (userId, data) {
     try {
-      return await UserSetting.updateByUserId(userId, data)
+      // Update settings
+      await UserSetting.updateByUserId(userId, data)
+
+      // If updating categories, delete them and add again
+      if (data.categories) {
+        await UserSetting.deleteCategories(userId)
+        await UserSetting.addCategories(userId, data.categories)
+      }
+
+      // Return full settings
+      return await UserSetting.findByUserId(userId)
       
     } catch (ex) {
       throw ex

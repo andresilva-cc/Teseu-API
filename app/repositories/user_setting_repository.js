@@ -91,6 +91,26 @@ class UserSettingRepository extends BaseRepository {
       throw ex
     }
   }
+
+  /**
+   * Deletes all categories of user settings
+   * This method is used before settings updates
+   *
+   * @param {number} userId - User ID
+   * @memberof UserSettingRepository
+   */
+  async deleteCategories (userId) {
+    try {
+      return await UserNotificationCategory.destroy({
+        where: {
+          userId
+        }
+      })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
 }
 
 module.exports = UserSettingRepository
