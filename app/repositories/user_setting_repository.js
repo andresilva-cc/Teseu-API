@@ -1,5 +1,6 @@
 const BaseRepository = require('./base_repository')
 const UserSetting = require('../models').UserSetting
+const UserNotificationCategory = require('../models').UserNotificationCategory
 const Error = require('../utils/error')
 
 /**
@@ -30,7 +31,13 @@ class UserSettingRepository extends BaseRepository {
       const userSettings = await this.model.findOne({
         where: {
           userId
-        }
+        },
+        include: [
+          {
+            model: UserNotificationCategory,
+            as: 'categories'
+          }
+        ]
       })
   
       if (userSettings)
@@ -56,6 +63,30 @@ class UserSettingRepository extends BaseRepository {
       const userSettings = await this.findByUserId(userId)
       return await userSettings.update(data)
       
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Adds categories to user settings
+   *
+   * @param {number} userId - User ID
+   * @param {array} categories - Categories to add
+   * @returns {Object} The updated settings
+   * @memberof UserSettingRepository
+   */
+  async addCategories (userId, categories) {
+    try {
+      await Promise.all(categories.map(async category =>
+        UserNotificationCategory.create({
+          userId,
+          categoryId: category.id
+        })
+      ))
+
+      return true
+
     } catch (ex) {
       throw ex
     }

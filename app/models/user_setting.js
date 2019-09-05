@@ -44,6 +44,14 @@ class UserSetting extends Sequelize.Model {
       sequelize
     })
   }
+
+  static associate(models) {
+    this.hasMany(models.UserNotificationCategory, {
+      as: 'categories',
+      sourceKey: 'userId',
+      foreignKey: 'userId'
+    })
+  }
 }
 
 module.exports = UserSetting
