@@ -29,6 +29,14 @@ Para executar este projeto, são necessários os seguintes softwares/ferramentas
 
 ## Outros
 
+### Gerar token de usuário
+
+Para gerar um token de usuário para testes, execute com o Node.js o arquivo ```./app/utils/generate_user_token.js``` passando como parâmetro o ID do usuário, como por exemplo:
+
+```node ./app/utils/generate_user_token.js 1```
+
+O token será retornado no terminal.
+
 ### Gerar token de admin
 
 Para gerar um token de admin, execute com o Node.js o arquivo ```./app/utils/generate_admin_token.js``` passando como parâmetro o nome do responsável pelo token, como por exemplo:
