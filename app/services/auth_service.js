@@ -1,9 +1,12 @@
+const Category = require('../repositories').Category
 const User = require('../repositories/').User
 const UserSetting = require('../repositories').UserSetting
+
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
-const usernames = require('../utils/username.json')
 
+const usernames = require('../utils/username.json')
+ 
 /** Auth Service */
 class AuthService {
 
@@ -18,8 +21,15 @@ class AuthService {
    */
   static async register (username, phone) {
     try {
+      // Create user
       const user = await User.create({ username, phone })
+
+      // Create settings
       await UserSetting.create({ userId: user.id })
+
+      // Create default settings categories
+      const categories = await Category.all()
+      await UserSetting.addCategories(user.id, categories)
 
       return user
 
