@@ -27,6 +27,12 @@ class UserContact extends Sequelize.Model {
         }
       }
     }, {
+      indexes: [
+        {
+          unique: true,
+          fields: ['userId', 'phone']
+        }
+      ],
       updatedAt: false,
       sequelize
     })
