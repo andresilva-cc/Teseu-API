@@ -24,7 +24,7 @@ class UserSettingRepository extends BaseRepository {
    *
    * @param {number} userId - User ID
    * @returns {Object|null} The user settings if found, null if not
-   * @memberof UserRepository
+   * @memberof UserSettingRepository
    */
   async findByUserId (userId) {
     try {
