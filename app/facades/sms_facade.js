@@ -1,5 +1,4 @@
 const Nexmo = require('nexmo')
-const util = require('util')
 
 /** SMS Facade */
 class SMSFacade {
