@@ -17,6 +17,7 @@ Para executar este projeto, são necessários os seguintes softwares/ferramentas
 2. Crie um banco de dados PostgreSQL e adicione a extensão PostGIS
 3. Crie uma cópia do arquivo `.env.example` com o nome  `.env` e realize as seguintes configurações:
     - Defina uma porta a ser utilizada
+    - Defina a URL da API em APP_URL
     - Gere uma string aleatória para a configuração AUTH_SECRET
     - Configure a conexão do banco de dados
     - Adicione sua Key e Secret do Nexmo para o envio de SMS
