@@ -55,6 +55,16 @@ class ErrorFormatter {
    */
   static parse (e) {
     switch (e.name) {
+      case 'ForbiddenError':
+        return {
+          code: 403,
+          error: {
+            name: 'ForbiddenError',
+            message: 'Forbidden',
+            details: 'The provided token does not have access to the requested resource.'
+          }
+        }
+
       case 'InvalidRequestCodeError':
         return {
           code: 400,
