@@ -18,6 +18,30 @@ class SMSFacade {
   }
 
   /**
+   * Sends a SMS
+   *
+   * @static
+   * @param {string} number Number to send the message
+   * @param {string} message Message to send
+   * @memberof SMSFacade
+   */
+  static sendSMS (number, message) {
+    return new Promise((resolve, reject) => {
+      this.getInstance().message.sendSms(
+       'Teseu',
+        number,
+        message,
+        (err, result) => {
+          if (!err)
+            resolve(result)
+          else
+            reject(err)
+        }
+      )
+    })
+  }
+
+  /**
    * Makes a new request
    *
    * @static
