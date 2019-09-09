@@ -40,6 +40,13 @@ class UserPlace extends Sequelize.Model {
       sequelize
     })
   }
+
+  static associate(models) {
+    this.hasMany(models.UserPlaceCategory, {
+      as: 'categories',
+      foreignKey: 'userPlaceId'
+    })
+  }
 }
 
 module.exports = UserPlace
