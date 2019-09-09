@@ -4,7 +4,7 @@ const Category = require('../repositories/').Category
 class CategoryService {
 
   /**
-   * Registers a new user
+   * Gets all categories
    *
    * @static
    * @returns {Array} List of categories
