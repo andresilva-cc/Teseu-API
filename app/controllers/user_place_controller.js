@@ -44,6 +44,9 @@ class UserPlaceController {
 
       data.userId = userId
 
+      if (!data.location.type)
+        data.location.type = 'Point'
+
       const userPlace = await UserPlaceService.create(data)
 
       return res.status(201).send(userPlace)
