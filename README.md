@@ -38,6 +38,14 @@ Para gerar um token de usuário para testes, execute com o Node.js o arquivo ```
 
 O token será retornado no terminal.
 
+### Gerar token de API
+
+Para gerar um token de API (usuários externos que vão consumir a API), execute com o Node.js o arquivo ```./app/utils/generate_api_token.js``` passando como parâmetro o e-mail do usuário, como por exemplo:
+
+```node ./app/utils/generate_api_token.js user@example.com```
+
+O token será retornado no terminal.
+
 ### Gerar token de admin
 
 Para gerar um token de admin, execute com o Node.js o arquivo ```./app/utils/generate_admin_token.js``` passando como parâmetro o nome do responsável pelo token, como por exemplo:
