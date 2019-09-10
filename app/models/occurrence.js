@@ -4,6 +4,10 @@ class Occurrence extends Sequelize.Model {
 
   static init(sequelize, DataTypes) {
     return super.init({
+      userId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       victim: {
         allowNull: false,
         defaultValue: false,
