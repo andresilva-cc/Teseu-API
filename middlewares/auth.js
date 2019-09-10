@@ -4,7 +4,7 @@ const ErrorFormatter = require('../app/utils/error_formatter')
 /**
  * Verifies JWT token
  *
- * @param {string} audience - Audience to check
+ * @param {string|Array} audience - Audience(s) to check
  * @returns {*}
  */
 module.exports = audience => {
