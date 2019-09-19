@@ -55,6 +55,16 @@ class ErrorFormatter {
    */
   static parse (e) {
     switch (e.name) {
+      case 'BadRequestError':
+        return {
+          code: 400,
+          error: {
+            name: 'BadRequestError',
+            message: 'Bad Request',
+            details: 'The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).'
+          }
+        }
+
       case 'ForbiddenError':
         return {
           code: 403,
