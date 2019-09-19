@@ -17,6 +17,12 @@ class OccurrenceReaction extends Sequelize.Model {
         type: DataTypes.SMALLINT
       }
     }, {
+      indexes: [
+        {
+          unique: true,
+          fields: ['occurrenceId', 'userId', 'reaction']
+        }
+      ],
       updatedAt: false,
       sequelize 
     })
