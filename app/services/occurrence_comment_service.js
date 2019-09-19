@@ -42,7 +42,7 @@ class OccurrenceCommentService {
    * @static
    * @param {number} id - Resource ID
    * @returns
-   * @memberof UserPlaceService
+   * @memberof OccurrenceCommentService
    */
   static async delete (id) {
     try {
