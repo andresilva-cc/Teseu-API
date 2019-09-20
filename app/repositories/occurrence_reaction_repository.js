@@ -67,7 +67,7 @@ class OccurrenceReactionRepository extends BaseRepository {
    * @param {number} userId - User ID
    * @param {number} reaction - Reaction Code
    * @returns {boolean} True if the reaction exists, false if not
-   * @memberof BaseRepository
+   * @memberof OccurrenceReactionRepository
    */
   async exists (occurrenceId, userId, reaction) {
     try {
@@ -94,7 +94,7 @@ class OccurrenceReactionRepository extends BaseRepository {
    * @param {number} userId - User ID
    * @param {number} reaction - Reaction Code
    * @returns {number} Number of rows deleted
-   * @memberof BaseRepository
+   * @memberof OccurrenceReactionRepository
    */
   async delete (occurrenceId, userId, reaction) {
     try {

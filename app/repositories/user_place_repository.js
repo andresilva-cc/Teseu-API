@@ -24,7 +24,7 @@ class UserPlaceRepository extends BaseRepository {
    * @override
    * @param {Object} data Data of the new resource
    * @returns {Object} The newly created resource
-   * @memberof BaseRepository
+   * @memberof OccurrenceReactionRepository
    */
   async create (data) {
     try {
