@@ -48,8 +48,6 @@ class OccurrenceService {
    */
   static async create (data) {
     try {
-      const timestamp = moment()
-
       /**
        * When 
        * 0 = now
@@ -58,19 +56,18 @@ class OccurrenceService {
        */    
       switch (data.when) {
         case 0:
-          data.active = true
+          data.when = moment()
+          data.activeUntil = moment().add(1, 'hour')
           break
         case 1:
-          timestamp.subtract(30, 'minutes')
-          data.active = true
+          data.when = moment().subtract(30, 'minutes')
+          data.activeUntil = moment().add(30, 'minutes')
           break
         case 2:
-          timestamp.subtract(1, 'hour')
-          data.active = false
+          data.when = moment().subtract(1, 'hour')
+          data.activeUntil = moment()
           break
       }
-
-      data.when = timestamp
 
       return await Occurrence.create(data)
       
