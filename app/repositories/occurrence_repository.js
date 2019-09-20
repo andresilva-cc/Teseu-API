@@ -24,7 +24,7 @@ class OccurrenceRepository extends BaseRepository {
       'description',
       'location',
       'attachment',
-      'active',
+      'activeUntil',
       'createdAt',
       'updatedAt'
     ]
