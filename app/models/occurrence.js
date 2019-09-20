@@ -57,10 +57,9 @@ class Occurrence extends Sequelize.Model {
       attachment: {
         type: DataTypes.STRING
       },
-      active: {
+      activeUntil: {
         allowNull: false,
-        defaultValue: true,
-        type: DataTypes.BOOLEAN
+        type: Sequelize.DATE
       }
     }, { sequelize })
   }
