@@ -73,6 +73,32 @@ class OccurrenceController {
       return next(ex)
     }
   }
+
+  /**
+   * Gets nearby occurrences
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof OccurrenceController
+   */
+  static async nearby (req, res, next) {
+    try {
+      const userId = req.user.id
+      const location = req.body
+
+      if (!location.type)
+        location.type = 'Point'
+
+      const occurrences = await OccurrenceService.nearby(userId, location)
+      return res.status(200).send(occurrences)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
 }
 
 module.exports = OccurrenceController

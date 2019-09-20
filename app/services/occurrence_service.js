@@ -1,4 +1,5 @@
 const Occurrence = require('../repositories/').Occurrence
+const UserSetting = require('../repositories/').UserSetting
 const moment = require('moment')
 
 /** Occurrence Service */
@@ -71,6 +72,26 @@ class OccurrenceService {
 
       return await Occurrence.create(data)
       
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Gets nearby occurrences
+   *
+   * @static
+   * @param {number} userId - User ID to retrieve user distance setting
+   * @param {Object} location - Location to search
+   * @memberof OccurrenceService
+   */
+  static async nearby (userId, location) {
+    try {
+      // Get user distance setting
+      const userSettings = await UserSetting.findByUserId(userId)
+  
+      return await Occurrence.nearby(location, userSettings.radius)
+
     } catch (ex) {
       throw ex
     }

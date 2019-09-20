@@ -1,5 +1,7 @@
+const Sequelize = require('sequelize')
 const BaseRepository = require('./base_repository')
 const Occurrence = require('../models').Occurrence
+const moment = require('moment')
 const Error = require('../utils/error')
 
 /**
@@ -35,7 +37,7 @@ class OccurrenceRepository extends BaseRepository {
    *
    * @override
    * @returns {Object[]} Resources
-   * @memberof BaseRepository
+   * @memberof OccurrenceRepository
    */
   async all () {
     try {
@@ -55,7 +57,7 @@ class OccurrenceRepository extends BaseRepository {
    * @param {number} id ID of the resource
    * @param {boolean} removeIdentification - Whether to remove user identification from the resource
    * @returns {Object|null} The resource if found, null if not
-   * @memberof BaseRepository
+   * @memberof OccurrenceRepository
    */
   async findById (id, removeIdentification) {
     try {
@@ -77,6 +79,37 @@ class OccurrenceRepository extends BaseRepository {
     } catch (ex) {
       throw ex
     }
+  }
+
+  /**
+   * Gets nearby occurrences
+   *
+   * @param {Object} location - Location to search
+   * @param {number} distance - Distance to search
+   * @returns {Object[]} Nearby occurrences
+   * @memberof OccurrenceRepository
+   */
+  async nearby (location, distance) {
+    const now = moment().format()
+
+    return await this.model.findAll({
+      where: Sequelize.and(
+        Sequelize.where(
+          Sequelize.fn(
+            'ST_DWithin',
+            Sequelize.cast(Sequelize.col('location'), 'geography'),
+            Sequelize.cast(Sequelize.fn('ST_MakePoint', location.coordinates[0], location.coordinates[1]), 'geography'),
+            distance
+          ),
+          true
+        ),
+        Sequelize.where(
+          Sequelize.col('activeUntil'),
+          '>=',
+          now
+        )
+      ) 
+    })
   }
 }
 
