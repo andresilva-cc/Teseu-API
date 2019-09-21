@@ -111,6 +111,60 @@ class OccurrenceRepository extends BaseRepository {
       ) 
     })
   }
+
+  /**
+   * Increments the occurrence active time
+   *
+   * @param {number} occurrenceId - Occurrence ID
+   * @param {number} amount - Amount to add
+   * @param {string} unit - Unit of time
+   * @returns {boolean} True if updated successfully
+   * @memberof OccurrenceRepository
+   */
+  async incrementActiveTime (occurrenceId, amount, unit) {
+    try {
+      const occurrence = await this.findById(occurrenceId)
+  
+      const activeUntil = moment(occurrence.activeUntil)
+        .add(amount, unit)
+        
+      await occurrence.update({
+        activeUntil
+      })
+
+      return true
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Decrements the occurrence active time
+   *
+   * @param {number} occurrenceId - Occurrence ID
+   * @param {number} amount - Amount to sub
+   * @param {string} unit - Unit of time
+   * @returns {boolean} True if updated successfully
+   * @memberof OccurrenceRepository
+   */
+  async decrementActiveTime (occurrenceId, amount, unit) {
+    try {
+      const occurrence = await this.findById(occurrenceId)
+  
+      const activeUntil = moment(occurrence.activeUntil)
+        .subtract(amount, unit)
+        
+      await occurrence.update({
+        activeUntil
+      })
+
+      return true
+
+    } catch (ex) {
+      throw ex
+    }
+  }
 }
 
 module.exports = OccurrenceRepository

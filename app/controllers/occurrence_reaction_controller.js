@@ -61,9 +61,9 @@ class OccurrenceReactionController {
    */
   static async delete (req, res, next) {
     try {
-      const occurrenceId = req.params.occurrenceId
+      const occurrenceId = Number(req.params.occurrenceId)
       const userId = req.user.id
-      const reaction = req.params.reaction
+      const reaction = Number(req.params.reaction)
 
       await OccurrenceReactionService.delete(occurrenceId, userId, reaction)
       return res.sendStatus(200)
