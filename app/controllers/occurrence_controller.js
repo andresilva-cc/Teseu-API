@@ -66,7 +66,7 @@ class OccurrenceController {
       if (!data.location.type)
         data.location.type = 'Point'
 
-      const occurrence = await OccurrenceService.create(data)
+      const occurrence = await OccurrenceService.create(data, req.user)
       return res.status(201).send(occurrence)
 
     } catch (ex) {

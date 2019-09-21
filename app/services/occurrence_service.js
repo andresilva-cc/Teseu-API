@@ -1,6 +1,9 @@
+const Category = require('../repositories/').Category
 const Occurrence = require('../repositories/').Occurrence
 const User = require('../repositories/').User
+const UserContact = require('../repositories/').UserContact
 const UserSetting = require('../repositories/').UserSetting
+const SMSFacade = require('../facades/sms_facade')
 const moment = require('moment')
 
 /** Occurrence Service */
@@ -45,11 +48,14 @@ class OccurrenceService {
    *
    * @static
    * @param {Object} data - Occurrence data to create
+   * @param {Object} user - User info
    * @returns {Object} The newly created occurrence
    * @memberof OccurrenceService
    */
-  static async create (data) {
+  static async create (data, user) {
     try {
+      const whenCode = data.when
+
       /**
        * When 
        * 0 = now
@@ -74,10 +80,62 @@ class OccurrenceService {
       // Create occurrence
       const occurrence = await Occurrence.create(data)
       
+      // If user is victim and notify contacts if enabled
+      if (data.notifyContacts && data.victim)
+        await this.notifyContacts({ ...data, whenCode }, user)
+
       // Give points to user
       await User.addPoints(data.userId, 5)
 
       return occurrence
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Notify user contacts about the occurrence
+   *
+   * @static
+   * @param {Object} data - Occurrence data to create
+   * @param {Object} user - User info
+   * @returns {Object} The newly created occurrence
+   * @memberof OccurrenceService
+   */
+  static async notifyContacts (data, user) {
+    try {
+      // Get user contacts
+      const contacts = await UserContact.findByUserId(data.userId)
+  
+      // Get occurrence category name
+      const category = await Category.findById(data.categoryId)
+  
+      // Remove special characters and convert to lower case
+      const categoryName = category.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase()
+  
+      let msg = ''
+  
+      switch (data.whenCode) {
+        case 0:
+          msg = `acabou de ver vitima de ${categoryName}`
+          break
+        case 1:
+          msg = `foi vitima de ${categoryName} ha 30m`
+          break
+        case 2:
+          msg = `foi vitima de ${categoryName} ha + de 1h`
+          break
+      }
+  
+      // Build message
+      const message = `Teseu: ${user.username} ${msg}`
+  
+      for (let i = 0; i < contacts.length; i++) {
+        await SMSFacade.sendSMS(contacts[i].phone, message)
+      }
+
+      return true
 
     } catch (ex) {
       throw ex
