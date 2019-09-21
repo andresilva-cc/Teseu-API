@@ -1,3 +1,4 @@
+const User = require('../repositories/').User
 const UserContact = require('../repositories').UserContact
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
@@ -33,9 +34,14 @@ class UserContactService {
    */
   static async create (data, user) {
     try {
+      // Create user contact
       const userContact = await UserContact.create(data)
 
+      // Notify contact about
       await this.notifyContact(userContact.id, userContact.phone, user.username)
+
+      // Give points to user
+      await User.addPoints(data.userId, 2)
 
       return userContact
 

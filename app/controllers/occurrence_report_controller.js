@@ -67,7 +67,7 @@ class OccurrenceReportController {
         status: req.body.status
       }
 
-      const report = await OccurrenceReportService.update(req.params.reportId, data)
+      const report = await OccurrenceReportService.update(req.params.occurrenceId, req.params.reportId, data)
       return res.status(200).send(report)
 
     } catch (ex) {

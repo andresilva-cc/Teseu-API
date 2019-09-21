@@ -1,3 +1,4 @@
+const User = require('../repositories/').User
 const UserSetting = require('../repositories').UserSetting
 
 /** User Setting Service */
@@ -31,13 +32,33 @@ class UserSettingService {
    */
   static async update (userId, data) {
     try {
+      // Current settings
+      const settings = await UserSetting.findByUserId(userId)
+      
       // Update settings
       await UserSetting.updateByUserId(userId, data)
-
+      
       // If updating categories, delete them and add again
       if (data.categories) {
         await UserSetting.deleteCategories(userId)
         await UserSetting.addCategories(userId, data.categories)
+      }
+
+      // GAMIFICATION: If updating "enableNotifications"
+      if (typeof data.enableNotifications !== 'undefined') {
+
+        // If "enableNotifications" changed
+        if (data.enableNotifications !== settings.enableNotifications) {
+
+          // If changing to enabled, give points to user
+          if (data.enableNotifications === true) {
+            await User.addPoints(userId, 10)
+
+          // If changing to disabled, remove points from user
+          } else {
+            await User.removePoints(userId, 10)
+          }
+        }
       }
 
       // Return full settings

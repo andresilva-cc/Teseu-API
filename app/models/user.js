@@ -27,7 +27,7 @@ class User extends Sequelize.Model {
       points: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 0
+        defaultValue: 10
       },
       level: {
         type: DataTypes.SMALLINT,

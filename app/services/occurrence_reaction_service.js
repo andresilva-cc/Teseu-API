@@ -1,5 +1,6 @@
 const OccurrenceReaction = require('../repositories/').OccurrenceReaction
 const Occurrence = require('../repositories/').Occurrence
+const User = require('../repositories/').User
 const Error = require('../utils/error')
 
 /** Occurrence Reaction Service */
@@ -48,6 +49,11 @@ class OccurrenceReactionService {
         await Occurrence.decrementActiveTime(data.occurrenceId, 1, 'minutes')
       }
       
+      // Give points to user
+      if (data.reaction === 0 || data.reaction === 2) {
+        await User.addPoints(data.userId, 1)
+      }
+
       return reaction
       
     } catch (ex) {
@@ -76,6 +82,11 @@ class OccurrenceReactionService {
       // Else, if reaction is "not happening anymore", increment active time by 1 minute
       } else if (reaction === 2) {
         await Occurrence.incrementActiveTime(occurrenceId, 1, 'minutes')
+      }
+
+      // Remove points from user
+      if (reaction === 0 || reaction === 2) {
+        await User.removePoints(userId, 1)
       }
 
       return result

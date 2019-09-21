@@ -1,4 +1,5 @@
 const OccurrenceComment = require('../repositories/').OccurrenceComment
+const User = require('../repositories/').User
 
 /** Occurrence Comment Service */
 class OccurrenceCommentService {
@@ -29,8 +30,13 @@ class OccurrenceCommentService {
    */
   static async create (data) {
     try {
-      return await OccurrenceComment.create(data)
+      const comment = await OccurrenceComment.create(data)
       
+      // Give points to user
+      await User.addPoints(data.userId, 1)
+
+      return comment
+
     } catch (ex) {
       throw ex
     }

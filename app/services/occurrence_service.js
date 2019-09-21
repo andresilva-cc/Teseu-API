@@ -1,4 +1,5 @@
 const Occurrence = require('../repositories/').Occurrence
+const User = require('../repositories/').User
 const UserSetting = require('../repositories/').UserSetting
 const moment = require('moment')
 
@@ -70,8 +71,14 @@ class OccurrenceService {
           break
       }
 
-      return await Occurrence.create(data)
+      // Create occurrence
+      const occurrence = await Occurrence.create(data)
       
+      // Give points to user
+      await User.addPoints(data.userId, 5)
+
+      return occurrence
+
     } catch (ex) {
       throw ex
     }

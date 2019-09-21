@@ -1,3 +1,5 @@
+const User = require('../repositories/').User
+const Occurrence = require('../repositories/').Occurrence
 const OccurrenceReport = require('../repositories/').OccurrenceReport
 
 /** Occurrence Report Service */
@@ -40,14 +42,30 @@ class OccurrenceReportService {
    * Updates a report
    *
    * @static
-   * @param {number} id - Resource ID
+   * @param {number} occurrenceId - Occurrence ID
+   * @param {number} reportId - Report ID
    * @param {Object} data - Data to update
    * @returns
    * @memberof OccurrenceReportService
    */
-  static async update (id, data) {
+  static async update (occurrenceId, reportId, data) {
     try {
-      return await OccurrenceReport.update(id, data)
+      // Update occurrence report
+      const report = await OccurrenceReport.update(reportId, data)
+
+      // GAMIFICATION: If updating status
+      if (typeof data.status !== 'undefined') {
+        // If report has been accepted (occurrence removed)
+        if (data.status === 2) {
+          // Get userId through occurrence
+          const { userId } = await Occurrence.findById(occurrenceId)
+
+          // Remove points from user
+          await User.removePoints(userId, 25)
+        }
+      }
+
+      return report
 
     } catch (ex) {
       throw ex

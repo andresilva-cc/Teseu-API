@@ -1,3 +1,4 @@
+const User = require('../repositories/').User
 const UserPlace = require('../repositories').UserPlace
 
 /** User Place Service */
@@ -30,7 +31,13 @@ class UserPlaceService {
    */
   static async create (data) {
     try {
-      return await UserPlace.create(data)
+      // Create user place
+      const userPlace = await UserPlace.create(data)
+
+      // Give points to user
+      await User.addPoints(data.userId, 2)
+
+      return userPlace
 
     } catch (ex) {
       throw ex

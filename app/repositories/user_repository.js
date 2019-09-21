@@ -15,6 +15,18 @@ class UserRepository extends BaseRepository {
   constructor () {
     super()
     this.model = User
+    this.levels = {
+      0: 0,
+      2: 25,
+      3: 50,
+      4: 100,
+      5: 200,
+      6: 400,
+      7: 800,
+      8: 1600,
+      9: 3200,
+      10: 6400
+    }
   }
 
   /**
@@ -54,6 +66,88 @@ class UserRepository extends BaseRepository {
     })
 
     return user !== null
+  }
+
+  /**
+   * Gets user level and points
+   *
+   * @param {number} userId - User ID
+   * @returns {Object} User level and points
+   * @memberof UserRepository
+   */
+  async level (userId) {
+    try {
+      return await this.model.findByPk(userId, {
+        attributes: ['level', 'points']
+      })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Add points to an user
+   *
+   * @param {number} userId - User ID
+   * @param {number} points - Amount of points to add
+   * @returns {boolean} True if updated successfully
+   * @memberof UserRepository
+   */
+  async addPoints (userId, points) {
+    try {
+      // Find user
+      const user = await this.findById(userId)
+  
+      // Calculate points
+      const newPoints = user.points + points
+
+      // New level
+      let newLevel = 0
+  
+      // Check if user has leveled up
+      Object.keys(this.levels).forEach(level => {
+        if (newPoints >= this.levels[level])
+          newLevel = level
+      })
+  
+      await user.update({
+        points: newPoints,
+        level: newLevel < user.level? user.level : newLevel
+      })
+      
+      return true
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Remove points from an user
+   *
+   * @param {number} userId - User ID
+   * @param {number} points - Amount of points to remove
+   * @returns {boolean} True if updated successfully
+   * @memberof UserRepository
+   */
+  async removePoints (userId, points) {
+    try {
+      // Find user
+      const user = await this.findById(userId)
+  
+      // Calculate points
+      const newPoints = user.points - points
+
+      await user.update({
+        points: newPoints
+      })
+      
+      return true
+
+    } catch (ex) {
+      throw ex
+    }
   }
 }
 
