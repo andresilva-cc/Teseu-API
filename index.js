@@ -34,7 +34,7 @@ if (process.env.APP_USE_HTTPS) {
     cert: fs.readFileSync(process.env.APP_SSL_CERT)
   }
   
-  https.createServer(options, app).listen(APP_HTTPS_PORT, () => {
+  https.createServer(options, app).listen(process.env.APP_HTTPS_PORT, () => {
     console.log(`HTTPS: Listening on port ${process.env.APP_HTTPS_PORT}`)
   })
 
