@@ -30,8 +30,8 @@ app.use(ErrorFormatter.middleware.bind(ErrorFormatter))
 // Create HTTPS server if set in env
 if (process.env.APP_USE_HTTPS) {
   const options = {
-    key: fs.readFileSync(process.env.APP_HTTPS_KEY),
-    cert: fs.readFileSync(process.env.APP_HTTPS_CERT)
+    key: fs.readFileSync(process.env.APP_SSL_KEY),
+    cert: fs.readFileSync(process.env.APP_SSL_CERT)
   }
   
   https.createServer(options, app).listen(APP_HTTPS_PORT, () => {
