@@ -28,7 +28,7 @@ require('./routes')(app)
 app.use(ErrorFormatter.middleware.bind(ErrorFormatter))
 
 // Create HTTPS server if set in env
-if (process.env.APP_USE_HTTPS) {
+if (process.env.APP_USE_HTTPS === 'true') {
   const options = {
     key: fs.readFileSync(process.env.APP_SSL_KEY),
     cert: fs.readFileSync(process.env.APP_SSL_CERT)
