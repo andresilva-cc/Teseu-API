@@ -63,6 +63,13 @@ class Occurrence extends Sequelize.Model {
       }
     }, { sequelize })
   }
+
+  static associate(models) {
+    this.belongsTo(models.Category, {
+      as: 'category',
+      foreignKey: 'categoryId'
+    })
+  }
 }
 
 module.exports = Occurrence

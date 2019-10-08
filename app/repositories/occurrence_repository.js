@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const BaseRepository = require('./base_repository')
 const Occurrence = require('../models').Occurrence
+const Category = require('../models').Category
 const moment = require('moment')
 const Error = require('../utils/error')
 
@@ -65,10 +66,23 @@ class OccurrenceRepository extends BaseRepository {
 
       if (removeIdentification) {
         resource = await this.model.findByPk(id, {
-          attributes: this.attributesWithoutIdentification
+          attributes: this.attributesWithoutIdentification,
+          include: [
+            {
+              model: Category,
+              as: 'category'
+            }
+          ]
         })
       } else {
-        resource = await this.model.findByPk(id)
+        resource = await this.model.findByPk(id, {
+          include: [
+            {
+              model: Category,
+              as: 'category'
+            }
+          ]
+        })
       }
 
       if (resource)
@@ -108,7 +122,13 @@ class OccurrenceRepository extends BaseRepository {
           '>=',
           now
         )
-      ) 
+      ),
+      include: [
+        {
+          model: Category,
+          as: 'category'
+        }
+      ] 
     })
   }
 
