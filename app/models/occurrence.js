@@ -69,6 +69,11 @@ class Occurrence extends Sequelize.Model {
       as: 'category',
       foreignKey: 'categoryId'
     })
+
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    })
   }
 }
 

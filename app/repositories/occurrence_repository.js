@@ -2,6 +2,7 @@ const Sequelize = require('sequelize')
 const BaseRepository = require('./base_repository')
 const Occurrence = require('../models').Occurrence
 const Category = require('../models').Category
+const User = require('../models').User
 const moment = require('moment')
 const Error = require('../utils/error')
 
@@ -80,6 +81,14 @@ class OccurrenceRepository extends BaseRepository {
             {
               model: Category,
               as: 'category'
+            },
+            {
+              model: User,
+              as: 'user',
+              attributes: [
+                'username',
+                'level'
+              ]
             }
           ]
         })
@@ -127,6 +136,14 @@ class OccurrenceRepository extends BaseRepository {
         {
           model: Category,
           as: 'category'
+        },
+        {
+          model: User,
+          as: 'user',
+          attributes: [
+            'username',
+            'level'
+          ]
         }
       ] 
     })
