@@ -23,6 +23,24 @@ class OccurrenceReactionService {
   }
 
   /**
+   * Returns user reactions of an occurrence
+   *
+   * @static
+   * @param {number} occurrenceId - Occurrence ID
+   * @param {number} userId - User ID
+   * @returns {Array} User reactions
+   * @memberof OccurrenceReactionService
+   */
+  static async myReactions (occurrenceId, userId) {
+    try {
+      return await OccurrenceReaction.myReactions(occurrenceId, userId)
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
    * Creates a new reaction
    *
    * @static

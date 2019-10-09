@@ -60,6 +60,36 @@ class OccurrenceReactionRepository extends BaseRepository {
   }
 
   /**
+   * Returns user reactions of an occurrence
+   *
+   * @static
+   * @param {number} occurrenceId - Occurrence ID
+   * @param {number} userId - User ID
+   * @returns {Array} User reactions
+   * @memberof OccurrenceReactionRepository
+   */
+  async myReactions (occurrenceId, userId) {
+    const reactions = [
+      false,
+      false,
+      false
+    ]
+
+    const result = await this.model.findAll({
+      where: {
+        occurrenceId,
+        userId
+      }
+    })
+
+    result.forEach(reaction => {
+      reactions[reaction.reaction] = true
+    })
+
+    return reactions
+  }
+
+  /**
    * Checks if a reaction exists
    *
    * @override

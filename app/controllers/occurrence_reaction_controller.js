@@ -25,6 +25,26 @@ class OccurrenceReactionController {
   }
 
   /**
+   * Returns user reactions of an occurrence
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof OccurrenceReactionController
+   */
+  static async myReactions (req, res, next) {
+    try {
+      const reactions = await OccurrenceReactionService.myReactions(req.params.occurrenceId, req.user.id)
+      return res.status(200).send(reactions)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
+
+  /**
    * Creates a new reaction
    *
    * @static
