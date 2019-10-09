@@ -1,5 +1,6 @@
 const BaseRepository = require('./base_repository')
 const OccurrenceComment = require('../models').OccurrenceComment
+const User = require('../models').User
 
 /**
  * Occurrence Comment repository
@@ -32,7 +33,17 @@ class OccurrenceCommentRepository extends BaseRepository {
         },
         order: [
           ['createdAt', 'DESC']
-        ]
+        ],
+        include: [
+          {
+            model: User,
+            as: 'user',
+            attributes: [
+              'username',
+              'level'
+            ]
+          }
+        ] 
       })
 
     } catch (ex) {
