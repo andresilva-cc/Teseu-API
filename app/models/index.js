@@ -7,6 +7,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 // Models
 const CategoryModel = require('./category')
+const EmergencyModeModel = require('./emergency_mode')
 const OccurrenceCommentModel = require('./occurrence_comment')
 const OccurrenceReactionModel = require('./occurrence_reaction')
 const OccurrenceReportModel = require('./occurrence_report')
@@ -22,6 +23,7 @@ const UserSettingModel = require('./user_setting')
 // Init Models
 const models = {
   Category: CategoryModel.init(sequelize, Sequelize),
+  EmergencyMode: EmergencyModeModel.init(sequelize, Sequelize),
   OccurrenceComment: OccurrenceCommentModel.init(sequelize, Sequelize),
   OccurrenceReaction: OccurrenceReactionModel.init(sequelize, Sequelize),
   OccurrenceReport: OccurrenceReportModel.init(sequelize, Sequelize),

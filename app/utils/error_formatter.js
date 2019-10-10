@@ -65,6 +65,26 @@ class ErrorFormatter {
           }
         }
 
+      case 'EmergencyModeAlreadyEnabledError':
+        return {
+          code: 400,
+          error: {
+            name: 'EmergencyModeAlreadyEnabledError',
+            message: 'Emergency Mode Already Enabled',
+            details: 'The emergency mode is already enabled.'
+          }
+        }
+
+      case 'EmergencyModeNotEnabledError':
+        return {
+          code: 400,
+          error: {
+            name: 'EmergencyModeNotEnabledError',
+            message: 'Emergency Mode Not Enabled',
+            details: 'The emergency mode is not enabled.'
+          }
+        }
+
       case 'ForbiddenError':
         return {
           code: 403,

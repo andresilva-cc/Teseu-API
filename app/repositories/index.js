@@ -1,5 +1,6 @@
 // Reporitories
 const CategoryRepository = require('./category_repository')
+const EmergencyModeRepository = require('./emergency_mode_repository')
 const OccurrenceRepository = require('./occurrence_repository')
 const OccurrenceCommentRepository = require('./occurrence_comment_repository')
 const OccurrenceReactionRepository = require('./occurrence_reaction_repository')
@@ -12,6 +13,7 @@ const UserSettingRepository = require('./user_setting_repository')
 // Initializes and exports repositories
 module.exports = {
   Category: new CategoryRepository(),
+  EmergencyMode: new EmergencyModeRepository(),
   Occurrence: new OccurrenceRepository(),
   OccurrenceComment: new OccurrenceCommentRepository(),
   OccurrenceReaction: new OccurrenceReactionRepository(),
