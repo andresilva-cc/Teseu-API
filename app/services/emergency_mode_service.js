@@ -5,6 +5,22 @@ const Error = require('../utils/error')
 
 /** Emergency Mode Service */
 class EmergencyModeService {
+  
+  /**
+   * Checks if emergency mode is enabled
+   *
+   * @static
+   * @param {number} userId - User ID 
+   * @memberof EmergencyModeService
+   */
+  static async check (userId) {
+    try {
+      return await EmergencyMode.isEnabled(userId)
+
+    } catch (ex) {
+      throw ex
+    }
+  }
 
   /**
    * Enable emergency mode

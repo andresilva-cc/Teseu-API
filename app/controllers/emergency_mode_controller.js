@@ -4,6 +4,26 @@ const EmergencyModeService = require('../services/emergency_mode_service')
 class EmergencyModeController {
 
   /**
+   * Checks if emergency mode is enabled
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof EmergencyModeController
+   */
+  static async check (req, res, next) {
+    try {
+      const enabled = await EmergencyModeService.check(req.user.id)
+      return res.status(200).send(enabled)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
+
+  /**
    * Enable emergency mode
    *
    * @static
