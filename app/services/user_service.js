@@ -19,6 +19,25 @@ class UserService {
       throw ex
     }
   }
+
+  /**
+   * Updates FCM token
+   *
+   * @static
+   * @param {number} userId - User ID
+   * @param {string} token - FCM Token
+   * @memberof UserService
+   */
+  static async updateFCMToken (userId, token) {
+    try {
+      return await User.update(userId, {
+        FCMToken: token
+      })
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
 }
 
 module.exports = UserService

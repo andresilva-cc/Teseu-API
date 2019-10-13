@@ -24,6 +24,28 @@ class UserController {
       return next(ex)
     }
   }
+
+  /**
+   * Updates FCM token
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof UserController
+   */
+  static async updateFCMToken (req, res, next) {
+    try {
+      const userId = req.user.id
+      await UserService.updateFCMToken(userId, req.body.token)
+      
+      return res.sendStatus(200)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
 }
 
 module.exports = UserController

@@ -33,6 +33,9 @@ class User extends Sequelize.Model {
         type: DataTypes.SMALLINT,
         allowNull: false,
         defaultValue: 1
+      },
+      FCMToken: {
+        type: DataTypes.STRING
       }
     }, { sequelize })
   }
