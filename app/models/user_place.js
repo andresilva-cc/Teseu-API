@@ -42,6 +42,11 @@ class UserPlace extends Sequelize.Model {
   }
 
   static associate(models) {
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    })
+    
     this.hasMany(models.UserPlaceCategory, {
       as: 'categories',
       foreignKey: 'userPlaceId'

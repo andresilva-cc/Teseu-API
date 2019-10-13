@@ -1,5 +1,7 @@
+const Category = require('../repositories').Category
 const User = require('../repositories/').User
 const UserPlace = require('../repositories').UserPlace
+const FCMService = require('./fcm_service')
 
 /** User Place Service */
 class UserPlaceService {
@@ -55,6 +57,28 @@ class UserPlaceService {
   static async delete (id) {
     try {
       return await UserPlace.delete(id)
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  static async findNearby (occurrence) {
+    try {
+      // Get occurrence category name
+      const category = await Category.findById(occurrence.categoryId)
+
+      // Get all places nearby this occurrence
+      const places = await UserPlace.nearby(occurrence)
+
+      // For each place, send a notification
+      places.forEach(place => {
+        FCMService.send({
+          title: 'Alerta',
+          text: `Uma ocorrência de ${category.name} foi registrada próxima ao seu local ${place.name}`,
+          sound: 'default'
+        }, {}, place.user.FCMToken)
+      })
 
     } catch (ex) {
       throw ex

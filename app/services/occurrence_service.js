@@ -3,6 +3,7 @@ const Occurrence = require('../repositories/').Occurrence
 const User = require('../repositories/').User
 const UserContact = require('../repositories/').UserContact
 const UserSetting = require('../repositories/').UserSetting
+const UserPlaceService = require('../services/user_place_service')
 const SMSFacade = require('../facades/sms_facade')
 const moment = require('moment')
 
@@ -82,10 +83,14 @@ class OccurrenceService {
       
       // If user is victim and notify contacts if enabled
       if (data.notifyContacts && data.victim)
-        await this.notifyContacts({ ...data, whenCode }, user)
+        this.notifyContacts({ ...data, whenCode }, user)
 
       // Give points to user
       await User.addPoints(data.userId, 5)
+
+      // Check and notify places nearby this occurrence
+      if (whenCode !== 2)
+        UserPlaceService.findNearby(data)
 
       return occurrence
 

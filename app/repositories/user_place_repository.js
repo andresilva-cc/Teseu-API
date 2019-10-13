@@ -1,4 +1,6 @@
+const Sequelize = require('sequelize')
 const BaseRepository = require('./base_repository')
+const User = require('../models').User
 const UserPlace = require('../models').UserPlace
 const UserPlaceCategory = require('../models').UserPlaceCategory
 
@@ -67,6 +69,50 @@ class UserPlaceRepository extends BaseRepository {
   
       return userPlaces
 
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Retrieves places that are nearby to an occurrence
+   *
+   * @param {Object} location - Location to search
+   * @returns {Object[]} Nearby occurrences
+   * @memberof OccurrenceRepository
+   */
+  async nearby (occurrence) {
+    try {
+      return await this.model.findAll({
+        where: Sequelize.and(
+          Sequelize.where(
+            Sequelize.fn(
+              'ST_DWithin',
+              Sequelize.cast(Sequelize.col('location'), 'geography'),
+              Sequelize.cast(Sequelize.fn('ST_MakePoint', occurrence.location.coordinates[0], occurrence.location.coordinates[1]), 'geography'),
+              Sequelize.col('radius')
+            ),
+            true
+          ),
+          Sequelize.where(
+            Sequelize.col('categories.categoryId'),
+            '=',
+            occurrence.categoryId
+          )
+        ),
+        include: [
+          {
+            model: User,
+            as: 'user',
+            attributes: ['FCMToken']
+          },
+          {
+            model: UserPlaceCategory,
+            as: 'categories'
+          }
+        ] 
+      })
 
     } catch (ex) {
       throw ex
