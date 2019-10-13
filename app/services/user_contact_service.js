@@ -1,5 +1,6 @@
 const User = require('../repositories/').User
 const UserContact = require('../repositories').UserContact
+const FCMService = require('../services/fcm_service')
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
 const URLShortenerFacade = require('../facades/url_shortener_facade')
@@ -99,11 +100,24 @@ class UserContactService {
   static async revoke (token) {
     try {
       const decode = JWTFacade.verify(token, null)
-      return await this.delete(decode.id)
 
-      // TODO: Notify user about revoke action
+      const contact = await UserContact.findById(decode.id)
+      const user = await User.findById(contact.userId)
+
+      const result = await this.delete(contact.id)
+
+      if (user.FCMToken) {
+        FCMService.send({
+          title: 'Aviso',
+          text: `${contact.name} saiu de sua lista de contatos`,
+          sound: 'default'
+        }, {}, user.FCMToken)
+      }
+
+      return result
 
     } catch (ex) {
+      console.log(ex)
       throw ex
     }
   }
