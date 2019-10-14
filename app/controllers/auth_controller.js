@@ -101,6 +101,25 @@ class AuthController {
       return next(ex)
     }
   }
+
+  /**
+   * Generates a view only token
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @memberof AuthController
+   */
+  static async generateViewOnlyToken (req, res, next) {
+    try {
+      const token = await AuthService.generateViewOnlyToken()
+      return res.status(200).send({ token })
+
+    } catch (ex) {
+
+    }
+  }
 }
 
 module.exports = AuthController

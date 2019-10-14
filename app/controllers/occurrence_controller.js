@@ -86,7 +86,11 @@ class OccurrenceController {
    */
   static async nearby (req, res, next) {
     try {
-      const userId = req.user.id
+      let userId = 0
+      if (req.user.id) {
+        userId = req.user.id
+      }
+
       const location = req.body
 
       if (!location.type)

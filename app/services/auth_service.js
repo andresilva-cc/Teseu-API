@@ -161,6 +161,17 @@ class AuthService {
   static async checkUsername (username) {
     return await User.usernameExists(username)
   }
+
+  /**
+   * Generates a view only token
+   *
+   * @static
+   * @returns {string} Generated token
+   * @memberof AuthService
+   */
+  static async generateViewOnlyToken () {
+    return await JWTFacade.sign({ viewOnly: true }, { audience: 'viewOnly' })
+  }
 }
 
 module.exports = AuthService

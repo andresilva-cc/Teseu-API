@@ -158,9 +158,13 @@ class OccurrenceService {
   static async nearby (userId, location) {
     try {
       // Get user distance setting
-      const userSettings = await UserSetting.findByUserId(userId)
+      let radius = 1000
+      if (userId > 0) {
+        const userSettings = await UserSetting.findByUserId(userId)
+        radius = userSettings.radius
+      }
   
-      return await Occurrence.nearby(location, userSettings.radius)
+      return await Occurrence.nearby(location, radius)
 
     } catch (ex) {
       throw ex
