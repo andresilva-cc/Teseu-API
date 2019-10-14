@@ -6,6 +6,8 @@ const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
 
 const usernames = require('../utils/username.json')
+
+const Error = require('../utils/error')
  
 /** Auth Service */
 class AuthService {
@@ -48,6 +50,11 @@ class AuthService {
    */
   static async sendSMS (phone) {
     try {
+      const user = await User.findByPhone(phone)
+
+      if (user === null)
+        throw new Error('UserNotFoundError')
+
       return await SMSFacade.request(phone)
 
     } catch (ex) {

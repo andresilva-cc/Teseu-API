@@ -198,6 +198,16 @@ class ErrorFormatter {
             details: 'No authorization token was found.'
           }
         }
+      
+      case 'UserNotFoundError':
+        return {
+          code: 404,
+          error: {
+            name: 'UserNotFoundError',
+            message: 'User Not Found',
+            details: 'Could not find any user with this username or phone number '
+          }
+        }
 
       default:
         return {
