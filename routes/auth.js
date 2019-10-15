@@ -8,4 +8,5 @@ module.exports = app => {
   app.get('/auth/username/generate', AuthController.generateUsername)
   app.post('/auth/username/check', AuthController.usernameExists)
   app.get('/auth/viewOnly/token', AuthController.generateViewOnlyToken)
+  app.post('/auth/api/token', AuthController.generateAPIToken)
 }

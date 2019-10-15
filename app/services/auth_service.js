@@ -2,6 +2,8 @@ const Category = require('../repositories').Category
 const User = require('../repositories/').User
 const UserSetting = require('../repositories').UserSetting
 
+const EmailService = require('./email_service')
+
 const JWTFacade = require('../facades/jwt_facade')
 const SMSFacade = require('../facades/sms_facade')
 
@@ -166,7 +168,12 @@ class AuthService {
    * @memberof AuthService
    */
   static async checkUsername (username) {
-    return await User.usernameExists(username)
+    try {
+      return await User.usernameExists(username)
+
+    } catch (ex) {
+      throw ex
+    }
   }
 
   /**
@@ -177,7 +184,32 @@ class AuthService {
    * @memberof AuthService
    */
   static async generateViewOnlyToken () {
-    return await JWTFacade.sign({ viewOnly: true }, { audience: 'viewOnly' })
+    try {
+      return await JWTFacade.sign({ viewOnly: true }, { audience: 'viewOnly' })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Generates a view only token
+   *
+   * @static
+   * @param {string} email - E-mail
+   * @memberof AuthService
+   */
+  static async generateAPIToken (email) {
+    try {
+      const token = await JWTFacade.sign({ email }, { audience: 'api' })
+      console.log('token: ' + token)
+      await EmailService.sendToken(email, token)
+
+      return true
+
+    } catch (ex) {
+      throw ex
+    }
   }
 }
 

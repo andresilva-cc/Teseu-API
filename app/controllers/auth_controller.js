@@ -117,7 +117,26 @@ class AuthController {
       return res.status(200).send({ token })
 
     } catch (ex) {
+      return next(ex)
+    }
+  }
 
+  /**
+   * Generates an API token
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @memberof AuthController
+   */
+  static async generateAPIToken (req, res, next) {
+    try {
+      await AuthService.generateAPIToken(req.body.email)
+      return res.sendStatus(200)
+
+    } catch (ex) {
+      return next(ex)
     }
   }
 }
