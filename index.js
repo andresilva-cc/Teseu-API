@@ -3,6 +3,7 @@ const https = require('https')
 const fs = require('fs')
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const ErrorFormatter = require('./app/utils/error_formatter')
 
@@ -11,6 +12,8 @@ const app = express()
 
 // Use Morgan to log requests to console
 app.use(morgan('dev'))
+
+app.use(cors())
 
 // Configure Body Parser
 app.use(bodyParser.urlencoded({ extended: true }))
