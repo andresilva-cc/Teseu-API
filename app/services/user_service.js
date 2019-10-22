@@ -1,4 +1,6 @@
 const User = require('../repositories').User
+const Category = require('../repositories').Category
+const FCMService = require('./fcm_service')
 
 /** User Service */
 class UserService {
@@ -14,6 +16,45 @@ class UserService {
   static async level (userId) {
     try {
       return await User.level(userId)
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
+   * Updates user location
+   *
+   * @static
+   * @param {number} userId - User ID
+   * @param {number} location - location
+   * @memberof UserService
+   */
+  static async location (userId, location) {
+    try {
+      return await User.update(userId, location)
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  static async findNearby (occurrence) {
+    try {
+      // Get occurrence category name
+      const category = await Category.findById(occurrence.categoryId)
+
+      // Get all users nearby this occurrence
+      const users = await User.nearby(occurrence)
+
+      // For each user, send a notification
+      users.forEach(user => {
+        FCMService.send({
+          title: 'Alerta',
+          text: `Uma ocorrência de ${category.name} foi registrada próxima ao seu local atual`,
+          sound: 'default'
+        }, {}, user.FCMToken)
+      })
 
     } catch (ex) {
       throw ex

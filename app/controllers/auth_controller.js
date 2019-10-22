@@ -19,6 +19,7 @@ class AuthController {
       return res.status(201).send(user)
 
     } catch (ex) {
+      console.log(ex)
       return next(ex)
     }
   }

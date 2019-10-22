@@ -36,8 +36,18 @@ class User extends Sequelize.Model {
       },
       FCMToken: {
         type: DataTypes.STRING
-      }
+      },
+      location: {
+        type: DataTypes.GEOMETRY('POINT')
+      },
     }, { sequelize })
+  }
+
+  static associate(models) {
+    this.hasOne(models.UserSetting, {
+      as: 'settings',
+      foreignKey: 'userId'
+    })
   }
 }
 

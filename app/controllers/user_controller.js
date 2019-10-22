@@ -26,6 +26,28 @@ class UserController {
   }
 
   /**
+   * Updates user location
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof UserController
+   */
+  static async location (req, res, next) {
+    try {
+      const userId = req.user.id
+      await UserService.location(userId, req.body)
+      
+      return res.sendStatus(200)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
+
+  /**
    * Updates FCM token
    *
    * @static

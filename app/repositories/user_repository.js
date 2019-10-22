@@ -1,5 +1,8 @@
+const Sequelize = require('sequelize')
 const BaseRepository = require('./base_repository')
 const User = require('../models').User
+const UserSetting = require('../models').UserSetting
+const UserNotificationCategory = require('../models').UserNotificationCategory
 
 /**
  * User repository
@@ -144,6 +147,52 @@ class UserRepository extends BaseRepository {
       })
       
       return true
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+
+  /**
+   * Retrieves users that are nearby to an occurrence
+   *
+   * @param {Object} location - Location to search
+   * @returns {Object[]} Users
+   * @memberof OccurrenceRepository
+   */
+  async nearby (occurrence) {
+    try {
+      return await this.model.findAll({
+        where: Sequelize.and(
+          Sequelize.where(
+            Sequelize.fn(
+              'ST_DWithin',
+              Sequelize.cast(Sequelize.col('User.location'), 'geography'),
+              Sequelize.cast(Sequelize.fn('ST_MakePoint', occurrence.location.coordinates[0], occurrence.location.coordinates[1]), 'geography'),
+              Sequelize.col('settings.radius')
+            ),
+            true
+          ),
+          Sequelize.where(
+            Sequelize.col('settings.categories.categoryId'),
+            '=',
+            occurrence.categoryId
+          )
+        ),
+        include: [
+          {
+            model: UserSetting,
+            as: 'settings',
+            include: [
+              {
+                model: UserNotificationCategory,
+                as: 'categories'
+              }
+            ]
+          }
+        ] 
+      })
 
     } catch (ex) {
       throw ex
