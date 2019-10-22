@@ -53,7 +53,6 @@ class EmailService {
       })
       
     } catch (ex) {
-      console.log(ex)
       throw ex
     }
   }

@@ -117,7 +117,6 @@ class UserContactService {
       return result
 
     } catch (ex) {
-      console.log(ex)
       throw ex
     }
   }

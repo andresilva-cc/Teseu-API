@@ -202,7 +202,6 @@ class AuthService {
   static async generateAPIToken (email) {
     try {
       const token = await JWTFacade.sign({ email }, { audience: 'api' })
-      console.log('token: ' + token)
       await EmailService.sendToken(email, token)
 
       return true

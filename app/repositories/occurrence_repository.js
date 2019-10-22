@@ -120,7 +120,7 @@ class OccurrenceRepository extends BaseRepository {
         Sequelize.where(
           Sequelize.fn(
             'ST_DWithin',
-            Sequelize.cast(Sequelize.col('location'), 'geography'),
+            Sequelize.cast(Sequelize.col('Occurrence.location'), 'geography'),
             Sequelize.cast(Sequelize.fn('ST_MakePoint', location.coordinates[0], location.coordinates[1]), 'geography'),
             distance
           ),
