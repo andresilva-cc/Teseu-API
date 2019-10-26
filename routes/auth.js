@@ -7,6 +7,7 @@ module.exports = app => {
   app.post('/auth/sms/check', AuthController.checkSMS)
   app.get('/auth/username/generate', AuthController.generateUsername)
   app.post('/auth/username/check', AuthController.usernameExists)
+  app.post('/auth/phone/check', AuthController.phoneExists)
   app.get('/auth/viewOnly/token', AuthController.generateViewOnlyToken)
   app.post('/auth/api/token', AuthController.generateAPIToken)
 }

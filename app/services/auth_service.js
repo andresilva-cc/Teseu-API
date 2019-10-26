@@ -177,6 +177,25 @@ class AuthService {
   }
 
   /**
+   * Checks if the phone already exists
+   *
+   * @static
+   * @param {string} phone The phone to check
+   * @returns {boolean}
+   * @memberof AuthService
+   */
+  static async checkPhone (phone) {
+    try {
+      const user = await User.findByPhone(phone)
+
+      return !!user
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
    * Generates a view only token
    *
    * @static

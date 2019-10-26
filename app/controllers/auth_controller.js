@@ -103,6 +103,25 @@ class AuthController {
   }
 
   /**
+   * Checks if phone already exists
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @memberof AuthController
+   */
+  static async phoneExists (req, res, next) {
+    try {
+      const exists = await AuthService.checkPhone(req.body.phone)
+      return res.status(200).send(exists)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
+
+  /**
    * Generates a view only token
    *
    * @static
