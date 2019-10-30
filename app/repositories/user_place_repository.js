@@ -105,7 +105,7 @@ class UserPlaceRepository extends BaseRepository {
           {
             model: User,
             as: 'user',
-            attributes: ['FCMToken']
+            attributes: ['id', 'FCMToken']
           },
           {
             model: UserPlaceCategory,

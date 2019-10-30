@@ -91,8 +91,7 @@ class OccurrenceService {
 
       // Check and notify users and places nearby this occurrence
       if (whenCode !== 2) {
-        UserService.findNearby(data)
-        UserPlaceService.findNearby(data)
+        this.findNearbyUsersAndPlaces(data)
       }
 
       return occurrence
@@ -100,6 +99,20 @@ class OccurrenceService {
     } catch (ex) {
       throw ex
     }
+  }
+
+  /**
+   * Find and notify nearby users and places
+   *
+   * @static
+   * @param {Object} occurrence - Occurrence data
+   * @param {Object} user - User info
+   * @returns {Object} The newly created occurrence
+   * @memberof OccurrenceService
+   */
+  static async findNearbyUsersAndPlaces (occurrence) {
+    const notifiedUsers = await UserService.findNearby(occurrence)
+    UserPlaceService.findNearby(occurrence, notifiedUsers)
   }
 
   /**

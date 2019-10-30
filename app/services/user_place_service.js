@@ -63,7 +63,15 @@ class UserPlaceService {
     }
   }
 
-  static async findNearby (occurrence) {
+  /**
+   * Find and notify nearby places about an occurrence
+   *
+   * @static
+   * @param {Object} occurrence - Occurrence data
+   * @param {Number[]} notifiedUsers - Users that have been already notified
+   * @memberof UserPlaceService
+   */
+  static async findNearby (occurrence, notifiedUsers) {
     try {
       // Get occurrence category name
       const category = await Category.findById(occurrence.categoryId)
@@ -73,11 +81,13 @@ class UserPlaceService {
 
       // For each place, send a notification
       places.forEach(place => {
-        FCMService.send({
-          title: 'Alerta',
-          text: `Uma ocorrência de ${category.name} foi registrada próxima ao seu local ${place.name}`,
-          sound: 'default'
-        }, {}, place.user.FCMToken)
+        if (!notifiedUsers.includes(place.user.id)) {
+          FCMService.send({
+            title: 'Alerta',
+            text: `Uma ocorrência de ${category.name} foi registrada próxima ao seu local ${place.name}`,
+            sound: 'default'
+          }, {}, place.user.FCMToken)
+        }
       })
 
     } catch (ex) {

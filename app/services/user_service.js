@@ -39,6 +39,14 @@ class UserService {
     }
   }
 
+  /**
+   * Find and notify nearby users about an occurrence
+   *
+   * @static
+   * @param {Object} occurrence - Occurrence data
+   * @returns {Number[]} Users that have been notified
+   * @memberof UserService
+   */
   static async findNearby (occurrence) {
     try {
       // Get occurrence category name
@@ -47,6 +55,8 @@ class UserService {
       // Get all users nearby this occurrence
       const users = await User.nearby(occurrence)
 
+      let notifiedUsers = []
+
       // For each user, send a notification
       users.forEach(user => {
         FCMService.send({
@@ -54,8 +64,12 @@ class UserService {
           text: `Uma ocorrência de ${category.name} foi registrada próxima ao seu local atual`,
           sound: 'default'
         }, {}, user.FCMToken)
+
+        notifiedUsers.push(user.id)
       })
 
+      return notifiedUsers
+      
     } catch (ex) {
       throw ex
     }
