@@ -31,7 +31,17 @@ class OccurrenceReportService {
    */
   static async create (data) {
     try {
-      return await OccurrenceReport.create(data)
+      // Create report
+      const report = await OccurrenceReport.create(data)
+
+      // Get report count
+      const count = await OccurrenceReport.getReportCount(data.occurrenceId)
+
+      // If occurrence has 5 reports or more
+      if (count >= 5)
+        Occurrence.disableOccurrence(data.occurrenceId)
+
+      return report
       
     } catch (ex) {
       throw ex

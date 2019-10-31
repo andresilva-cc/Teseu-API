@@ -36,6 +36,26 @@ class OccurrenceReportRepository extends BaseRepository {
       throw ex
     }
   }
+
+  /**
+   * Returns the report count of a specific occurrence
+   *
+   * @param {number} occurrenceId ID of the occurrence
+   * @returns {Number} Report count
+   * @memberof OccurrenceReportRepository
+   */
+  async getReportCount (occurrenceId) {
+    try {
+      return await this.model.count({
+        where: {
+          occurrenceId
+        }
+      })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
 }
 
 module.exports = OccurrenceReportRepository

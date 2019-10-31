@@ -202,6 +202,24 @@ class OccurrenceRepository extends BaseRepository {
       throw ex
     }
   }
+
+  /**
+   * Disables an occurrence
+   *
+   * @param {number} occurrenceId - Occurrence ID
+   * @returns {boolean} True if updated successfully
+   * @memberof OccurrenceRepository
+   */
+  async disableOccurrence (occurrenceId) {
+    try {
+      return await this.update(occurrenceId, {
+        activeUntil: moment(0)
+      })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
 }
 
 module.exports = OccurrenceRepository
