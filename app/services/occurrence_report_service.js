@@ -49,6 +49,26 @@ class OccurrenceReportService {
   }
 
   /**
+   * Retrieves an user report
+   *
+   * @static
+   * @param {number} userId - User ID
+   * @param {number} occurrenceId - Occurrence ID
+   * @returns {Object|null} The report if found, or null if not
+   * @memberof OccurrenceReportService
+   */
+  static async findUserReport (userId, occurrenceId) {
+    try {
+      const report = await OccurrenceReport.findUserReport(userId, occurrenceId)
+
+      return report
+      
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
    * Updates a report
    *
    * @static

@@ -51,6 +51,26 @@ class OccurrenceReportController {
   }
 
   /**
+   * Retrieves an user report
+   *
+   * @static
+   * @param {Object} req - Requisition
+   * @param {Object} res - Response
+   * @param {function} next - Next function
+   * @returns
+   * @memberof OccurrenceReportController
+   */
+  static async findUserReport (req, res, next) {
+    try {
+      const report = await OccurrenceReportService.findUserReport(req.user.id, req.params.occurrenceId)
+      return res.status(200).send(report)
+
+    } catch (ex) {
+      return next(ex)
+    }
+  }
+
+  /**
    * Updates a report
    *
    * @static

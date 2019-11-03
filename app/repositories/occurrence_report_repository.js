@@ -38,6 +38,29 @@ class OccurrenceReportRepository extends BaseRepository {
   }
 
   /**
+   * Retrieves an user report
+   *
+   * @static
+   * @param {number} userId - User ID
+   * @param {number} occurrenceId - Occurrence ID
+   * @returns {Object|null} The report if found, or null if not
+   * @memberof OccurrenceReportService
+   */
+  async findUserReport (userId, occurrenceId) {
+    try {
+      return await this.model.findOne({
+        where: {
+          userId,
+          occurrenceId
+        }
+      })
+
+    } catch (ex) {
+      throw ex
+    }
+  }
+
+  /**
    * Returns the report count of a specific occurrence
    *
    * @param {number} occurrenceId ID of the occurrence
