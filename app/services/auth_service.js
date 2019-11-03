@@ -57,9 +57,17 @@ class AuthService {
       if (user === null)
         throw new Error('UserNotFoundError')
 
-      return await SMSFacade.request(phone)
+      const response = await SMSFacade.request(phone)
+
+      if (response.status === '10') {
+        await SMSFacade.cancel(response.request_id)
+        return await SMSFacade.request(phone)
+      }
+
+      return response
 
     } catch (ex) {
+      console.log(ex)
       throw ex
     }
   }
